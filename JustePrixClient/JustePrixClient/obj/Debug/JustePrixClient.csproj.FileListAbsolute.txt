@@ -1,0 +1,11 @@
+c:\users\nic\documents\visual studio 2013\Projects\JustePrixClient\JustePrixClient\bin\Debug\JustePrixClient.exe.config
+c:\users\nic\documents\visual studio 2013\Projects\JustePrixClient\JustePrixClient\obj\Debug\JustePrixClient.Properties.Resources.resources
+c:\users\nic\documents\visual studio 2013\Projects\JustePrixClient\JustePrixClient\obj\Debug\JustePrixClient.csproj.GenerateResource.Cache
+c:\users\nic\documents\visual studio 2013\Projects\JustePrixClient\JustePrixClient\bin\Debug\JustePrixClient.exe
+c:\users\nic\documents\visual studio 2013\Projects\JustePrixClient\JustePrixClient\bin\Debug\JustePrixClient.pdb
+c:\users\nic\documents\visual studio 2013\Projects\JustePrixClient\JustePrixClient\obj\Debug\JustePrixClient.exe
+c:\users\nic\documents\visual studio 2013\Projects\JustePrixClient\JustePrixClient\obj\Debug\JustePrixClient.pdb
+c:\users\nic\documents\visual studio 2013\Projects\JustePrixClient\JustePrixClient\obj\Debug\JustePrixClient.InterfaceJoueur.resources
+C:\Users\Nic\Documents\Visual Studio 2013\Projects\JustePrixClient\JustePrixClient\obj\Debug\JustePrixClient.csprojResolveAssemblyReference.cache
+C:\Users\Nic\Documents\Visual Studio 2013\Projects\JustePrixClient\JustePrixClient\bin\Debug\Cadeau.dll
+C:\Users\Nic\Documents\Visual Studio 2013\Projects\JustePrixClient\JustePrixClient\bin\Debug\Cadeau.pdb

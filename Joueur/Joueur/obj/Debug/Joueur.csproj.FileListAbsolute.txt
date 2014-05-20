@@ -1,0 +1,5 @@
+c:\users\nic\documents\visual studio 2013\Projects\Joueur\Joueur\bin\Debug\Joueur.dll
+c:\users\nic\documents\visual studio 2013\Projects\Joueur\Joueur\bin\Debug\Joueur.pdb
+c:\users\nic\documents\visual studio 2013\Projects\Joueur\Joueur\obj\Debug\Joueur.csprojResolveAssemblyReference.cache
+c:\users\nic\documents\visual studio 2013\Projects\Joueur\Joueur\obj\Debug\Joueur.dll
+c:\users\nic\documents\visual studio 2013\Projects\Joueur\Joueur\obj\Debug\Joueur.pdb

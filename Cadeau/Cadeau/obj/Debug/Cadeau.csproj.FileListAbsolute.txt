@@ -1,0 +1,5 @@
+c:\users\nic\documents\visual studio 2013\Projects\Cadeau\Cadeau\bin\Debug\Cadeau.dll
+c:\users\nic\documents\visual studio 2013\Projects\Cadeau\Cadeau\bin\Debug\Cadeau.pdb
+c:\users\nic\documents\visual studio 2013\Projects\Cadeau\Cadeau\obj\Debug\Cadeau.csprojResolveAssemblyReference.cache
+c:\users\nic\documents\visual studio 2013\Projects\Cadeau\Cadeau\obj\Debug\Cadeau.dll
+c:\users\nic\documents\visual studio 2013\Projects\Cadeau\Cadeau\obj\Debug\Cadeau.pdb
