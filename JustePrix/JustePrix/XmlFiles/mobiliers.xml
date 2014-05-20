@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Images>
+
+  <Mobilier>
+    <Nom>chambre_bois</Nom>
+    <Prix>4750</Prix>
+  </Mobilier>
+
+  <Mobilier>
+    <Nom>cuisine_bar</Nom>
+    <Prix>5210</Prix>
+  </Mobilier>
+
+  <Mobilier>
+    <Nom>cuisine_luxe</Nom>
+    <Prix>12650</Prix>
+  </Mobilier>
+
+  <Mobilier>
+    <Nom>living_moderne</Nom>
+    <Prix>9800</Prix>
+  </Mobilier>
+
+  <Mobilier>
+    <Nom>modern_living</Nom>
+    <Prix>19760</Prix>
+  </Mobilier>
+
+</Images>

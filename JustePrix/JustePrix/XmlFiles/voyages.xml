@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Images>
+
+  <Mobilier>
+    <Nom>bruxelles</Nom>
+    <Prix>1500</Prix>
+  </Mobilier>
+
+  <Mobilier>
+    <Nom>budapest</Nom>
+    <Prix>1140</Prix>
+  </Mobilier>
+
+  <Mobilier>
+    <Nom>hotel_barca</Nom>
+    <Prix>850</Prix>
+  </Mobilier>
+
+  <Mobilier>
+    <Nom>hotel_chypre</Nom>
+    <Prix>1900</Prix>
+  </Mobilier>
+
+  <Mobilier>
+    <Nom>monaco</Nom>
+    <Prix>3760</Prix>
+  </Mobilier>
+
+  <Mobilier>
+    <Nom>portugal</Nom>
+    <Prix>780</Prix>
+  </Mobilier>
+
+  <Mobilier>
+    <Nom>sydney</Nom>
+    <Prix>5470</Prix>
+  </Mobilier>
+
+  <Mobilier>
+    <Nom>thailande</Nom>
+    <Prix>4180</Prix>
+  </Mobilier>
+
+</Images>

@@ -1,0 +1,13 @@
+c:\users\nic\documents\visual studio 2013\Projects\JustePrix\JustePrix\bin\Debug\JustePrix.exe.config
+c:\users\nic\documents\visual studio 2013\Projects\JustePrix\JustePrix\bin\Debug\JustePrix.exe
+c:\users\nic\documents\visual studio 2013\Projects\JustePrix\JustePrix\bin\Debug\JustePrix.pdb
+c:\users\nic\documents\visual studio 2013\Projects\JustePrix\JustePrix\obj\Debug\JustePrix.Properties.Resources.resources
+c:\users\nic\documents\visual studio 2013\Projects\JustePrix\JustePrix\obj\Debug\JustePrix.csproj.GenerateResource.Cache
+c:\users\nic\documents\visual studio 2013\Projects\JustePrix\JustePrix\obj\Debug\JustePrix.exe
+c:\users\nic\documents\visual studio 2013\Projects\JustePrix\JustePrix\obj\Debug\JustePrix.pdb
+C:\Users\Nic\Documents\Visual Studio 2013\Projects\JustePrix\JustePrix\obj\Debug\JustePrix.Serveur.resources
+C:\Users\Nic\Documents\Visual Studio 2013\Projects\JustePrix\JustePrix\obj\Debug\JustePrix.csprojResolveAssemblyReference.cache
+C:\Users\Nic\Documents\Visual Studio 2013\Projects\JustePrix\JustePrix\bin\Debug\Joueur.dll
+C:\Users\Nic\Documents\Visual Studio 2013\Projects\JustePrix\JustePrix\bin\Debug\Joueur.pdb
+C:\Users\Nic\Documents\Visual Studio 2013\Projects\JustePrix\JustePrix\bin\Debug\Cadeau.dll
+C:\Users\Nic\Documents\Visual Studio 2013\Projects\JustePrix\JustePrix\bin\Debug\Cadeau.pdb

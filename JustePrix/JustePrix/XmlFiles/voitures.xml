@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Images>
+
+  <Voiture>
+    <Nom>audiR8</Nom>
+    <Prix>74000</Prix>
+  </Voiture>
+
+  <Voiture>
+    <Nom>BMW_Serie_4</Nom>
+    <Prix>55000</Prix>
+  </Voiture>
+
+  <Voiture>
+    <Nom>jaguar</Nom>
+    <Prix>49500</Prix>
+  </Voiture>
+
+  <Voiture>
+    <Nom>lambo</Nom>
+    <Prix>90600</Prix>
+  </Voiture>
+
+  <Voiture>
+    <Nom>merco</Nom>
+    <Prix>51250</Prix>
+  </Voiture>
+
+  <Voiture>
+    <Nom>bentley</Nom>
+    <Prix>221250</Prix>
+  </Voiture>
+
+  <Voiture>
+    <Nom>bugatti</Nom>
+    <Prix>500340</Prix>
+  </Voiture>
+
+  <Voiture>
+    <Nom>porsche</Nom>
+    <Prix>95780</Prix>
+  </Voiture>
+
+</Images>
