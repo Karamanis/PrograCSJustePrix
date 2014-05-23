@@ -15,14 +15,14 @@ using System.Windows.Forms;
 
 using Cadeau;
 
+
 namespace JustePrixClient
 {
     public partial class InterfaceJoueur : Form
     {
         public const int numPort = 18003;
 
-        IPAddress serveurAddress;
-        TcpClient client;
+        IPAddress serveurAddress;        
         NetworkStream stream;
         bool imagesRecues = false;
 
@@ -30,9 +30,10 @@ namespace JustePrixClient
         Thread thEcoute;
 
         private Object thisLock = new Object();
-
-        Boolean clientEcoute = true;
+        
         Boolean stopCompteur = false;
+
+        Joueur.Joueur player;
 
         public InterfaceJoueur()
         {
@@ -40,12 +41,13 @@ namespace JustePrixClient
             tbRecvMesg.Enabled = false;
 
             serveurAddress = IPAddress.Parse("127.0.0.1");
-            client = new TcpClient();
+            TcpClient client = new TcpClient();
 
             try
             {
-                client.Connect(serveurAddress, numPort);
-                stream = client.GetStream();
+                client.Connect(serveurAddress, numPort);                
+                player = new Joueur.Joueur(client, 0, true);    // création du joueur
+                stream = player.leClient.GetStream(); 
             }
             catch (Exception e)
             {
@@ -87,7 +89,7 @@ namespace JustePrixClient
 
         private void Ecoute()
         {                                        
-            while (clientEcoute) 
+            while (player.ClientTourne) 
             {
                 lock (thisLock) // pour que tout ce bloc s'exécute sans etre interrompu
                 {
@@ -99,20 +101,13 @@ namespace JustePrixClient
                             if (stream.DataAvailable)   // s'il y a quelque chose à lire sur le flux
                             {
                                 try
-                                {
-                                    /*
-                                    List<Image> objRec = (List<Image>)formatter.Deserialize(stream);    // désérialise les images à partir du flux
-                                    pbVoiture.Image = objRec.ElementAt(0);
-                                    pbVoyage.Image = objRec.ElementAt(1);
-                                    pbMobilier.Image = objRec.ElementAt(2);
-                                    imagesRecues = true;
-                                    */
-                                    List<CadeauJP> cadReceived = (List<CadeauJP>)formatter.Deserialize(stream);
+                                {                                    
+                                    List<CadeauJP> cadReceived = (List<CadeauJP>)formatter.Deserialize(stream); // désérialise les images à partir du flux
                                     pbVoiture.Image = cadReceived.ElementAt(0).Img;
                                     pbVoyage.Image = cadReceived.ElementAt(1).Img;
                                     pbMobilier.Image = cadReceived.ElementAt(2).Img;
                                     
-                                    // ... INIT LES LABELS
+                                    // INIT LES LABELS
                                     String nomCadeau = cadReceived.ElementAt(0).Nom.Replace("_", String.Empty + " ");                                    
                                     try{
                                         Invoke(new Action<String>(setLabelVoit), nomCadeau);
@@ -132,7 +127,10 @@ namespace JustePrixClient
                                     catch (InvalidOperationException) { }                                    
                                     
                                     // ... Recuperer le prix total
-
+                                    foreach (CadeauJP cad in cadReceived) {
+                                        player.lePrix += cad.Prix;
+                                    }
+                                    // le joueur contient le prix total de tous ses cadeaux
 
                                     imagesRecues = true;
 
@@ -141,7 +139,7 @@ namespace JustePrixClient
                             }
                         }catch(NullReferenceException ex){
                             MessageBox.Show("Client : Serveur indisponible : "+ ex.Message);
-                            clientEcoute = false; // on arrete le thread du client  
+                            player.ClientTourne = false; // on arrete le thread du client  
                             break;
                         }
                     }
@@ -151,13 +149,17 @@ namespace JustePrixClient
                         byte[] b = new byte[100];
                         try
                         {
-                            int k = client.Client.Receive(b);
+                            int k = player.leClient.Client.Receive(b);
 
                             String resultat = "";
                             for (int i = 0; i < k; i++)
                             {
                                 String str = Convert.ToChar(b[i]).ToString();
-                                Invoke(new Action<String>(addMessage), str);
+                                try
+                                {
+                                    Invoke(new Action<String>(addMessage), str);
+                                }catch(InvalidOperationException ex) { MessageBox.Show(ex.Message); }                                
+
                                 resultat += str;
                             }
 
@@ -176,8 +178,15 @@ namespace JustePrixClient
                                 case "=":
                                     // c'est gagner ! A voir ... On déconnecte le client ?! 
                                     MessageBox.Show("C'est Gagné !");
-                                    FermerClient();
-                                    DisabledControls();
+                                    
+                                    try { 
+                                        Invoke(new Action(DisabledControls)); 
+                                    }catch (InvalidOperationException ex) { MessageBox.Show(ex.Message); }
+                                    
+                                    try { 
+                                        Invoke(new Action(FermerClient));
+                                    }catch(InvalidOperationException ex) { MessageBox.Show(ex.Message); }                                                                        
+
                                     break;                                
                             }
                         }
@@ -226,16 +235,24 @@ namespace JustePrixClient
 
                     if (compteur == 0)
                     {
-                        MessageBox.Show("C'est Perdu !");
+                        MessageBox.Show("C'est Perdu !");                        
+                        MessageBox.Show("Le prix total était de " + player.lePrix);
+
+                        // blocage des textbox et bouton
+                        try
+                        {
+                            Invoke(new Action(DisabledControls));
+                        }
+                        catch (InvalidOperationException ioe)
+                        {
+                            MessageBox.Show("Erreur client - invalid Operation : " + ioe.Message);
+                        }
+
                         // fermeture des flux et arrêts des thread
                         try { Invoke(new Action(FermerClient)); } catch (InvalidOperationException ioe){
                             MessageBox.Show("Erreur client - invalid Operation : " + ioe.Message);
-                        }
-                        // blocage des textbox et bouton
-                        try{   
-                            Invoke(new Action(DisabledControls)); }catch (InvalidOperationException ioe){
-                            MessageBox.Show("Erreur client - invalid Operation : " + ioe.Message);
-                        }
+                        }                        
+                        
                         stopCompteur = true;
                     }
                 }
@@ -284,8 +301,8 @@ namespace JustePrixClient
         }
 
         private void FermerClient() 
-        {
-            client.Client.Close();
+        {            
+            player.leClient.Client.Close();
             stream.Close();
             thEcoute.Abort();
             thHorloge.Abort();

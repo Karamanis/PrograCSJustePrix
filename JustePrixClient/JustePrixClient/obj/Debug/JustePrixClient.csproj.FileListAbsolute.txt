@@ -9,3 +9,5 @@ c:\users\nic\documents\visual studio 2013\Projects\JustePrixClient\JustePrixClie
 C:\Users\Nic\Documents\Visual Studio 2013\Projects\JustePrixClient\JustePrixClient\obj\Debug\JustePrixClient.csprojResolveAssemblyReference.cache
 C:\Users\Nic\Documents\Visual Studio 2013\Projects\JustePrixClient\JustePrixClient\bin\Debug\Cadeau.dll
 C:\Users\Nic\Documents\Visual Studio 2013\Projects\JustePrixClient\JustePrixClient\bin\Debug\Cadeau.pdb
+C:\Users\Nic\Documents\Visual Studio 2013\Projects\JustePrixClient\JustePrixClient\bin\Debug\Joueur.dll
+C:\Users\Nic\Documents\Visual Studio 2013\Projects\JustePrixClient\JustePrixClient\bin\Debug\Joueur.pdb

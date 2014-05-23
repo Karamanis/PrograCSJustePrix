@@ -193,16 +193,30 @@ namespace JustePrix
                     TcpClient client = myList.AcceptTcpClient();  // On attend qu'un client se connecte       
 
                     String message = "Connection accepted from " + client.Client.RemoteEndPoint + "\r\n";
-                    Invoke(new Action<String>(addMessage), message);    // noter dans l'historique                
+                    try { 
+                        Invoke(new Action<String>(addMessage), message);    // noter dans l'historique                
+                    }
+                    catch (InvalidOperationException ex) { MessageBox.Show(ex.Message); }
 
                     Thread thClient = new Thread(new ParameterizedThreadStart(CommunicationClient));      // créer un thread pour communiquer avec client
-                    listOfThClients.Add(thClient);       // ajouter le thread dans la liste
+                    listOfThClients.Add(thClient);       // ajouter le thread dans la liste                    
 
                     int prixTotal = EnvoiImages(client);    // Dès qu'un client se connecte, on lui envoie les photos                                 
                     Joueur.Joueur player = new Joueur.Joueur(client, prixTotal, true);                    
 
                     listOfPlayers.Add(player);
-                    thClient.Start(player);   // on démarre le thread qui s'occupe de la communication avec le client   
+                    thClient.Start(player);   // on démarre le thread qui s'occupe de la communication avec le client  
+
+                    /*
+                     * Pour faciliter le test du jeu :
+                     * Affichage du prix total des cadeaux chez le serveur
+                     */
+                    String prixTot = Convert.ToString(prixTotal);
+                    try
+                    {
+                        Invoke(new Action<String>(addMessage), prixTot);    // ajouter à l'historique                
+                    }
+                    catch (InvalidOperationException ex) { MessageBox.Show(ex.Message); }
                 }
                 catch (SocketException) { }
             }
@@ -225,22 +239,27 @@ namespace JustePrix
 
                     // détection de déconnexion d'un client
                     if (k <= 0)
-                    {
-                        // try .. catch --> Invoke
-                        Invoke(new Action<String>(addMessage), "\r\n Un client s'est déconnecté !\r\n");
+                    {                        
+                        try { 
+                            Invoke(new Action<String>(addMessage), "\r\n Un client s'est déconnecté !\r\n");
+                        }
+                        catch (InvalidOperationException ex) { MessageBox.Show(ex.Message); }
                         // supprimer le client de la liste et son thread correspondant !!!                        
                         player.leClient.Close();
-                        int indiceClient = listOfPlayers.IndexOf(player);
-                        //listOfThClients.ElementAt(indiceClient).Abort();    // on arrete le thread
+                        int indiceClient = listOfPlayers.IndexOf(player);                        
                         listOfThClients.RemoveAt(indiceClient);   // supprime le thread qui s'occupe du client
                         listOfPlayers.Remove(player);
-                        
-                        break;
+                        player.ClientTourne = false;
+
+                        break;  
                     }
 
                     String strRec = "\r\n Received... ";
                     // thread-safe 
-                    Invoke(new Action<String>(addMessage), strRec);
+                    try { 
+                        Invoke(new Action<String>(addMessage), strRec);
+                    }
+                    catch (InvalidOperationException ex) { MessageBox.Show(ex.Message); }
 
                     String chaineRecue = "";
 
@@ -248,7 +267,11 @@ namespace JustePrix
                     {
                         String str = Convert.ToChar(b[i]).ToString();
                         // try ... pour les invoke ?
-                        Invoke(new Action<String>(addMessage), str);
+                        try
+                        {
+                            Invoke(new Action<String>(addMessage), str);
+                        }
+                        catch (InvalidOperationException ex) { MessageBox.Show(ex.Message); }
                         chaineRecue += str;
                     }
 
