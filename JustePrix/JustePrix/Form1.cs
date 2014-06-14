@@ -27,7 +27,7 @@ namespace JustePrix
         List<Joueur.Joueur> listOfPlayers;
         List<Thread> listOfThClients;
 
-        Boolean srvTourne = true;
+        bool srvTourne = true;
 
         List<CadeauJP> lesVoitures;
         List<CadeauJP> lesVoyages;
@@ -37,9 +37,7 @@ namespace JustePrix
 
         public Serveur()
         {
-            InitializeComponent();
-
-            tbHistorique.Enabled = false;
+            InitializeComponent();            
 
             lesMobiliers = new List<CadeauJP>();
             lesVoitures = new List<CadeauJP>();
@@ -152,27 +150,22 @@ namespace JustePrix
         {
             int prixTotal = 0;
 
-            //List<Image> listOfImg = new List<Image>();
             List<CadeauJP> listOfCad = RndImagesCadeaux();
 
             // on charge la voiture
-            Image imgCadeau = Image.FromFile(@"..\..\Photos\Voitures\" + listOfCad.ElementAt(0).Nom + ".jpg");
-            //listOfImg.Add(imgCadeau);
+            Image imgCadeau = Image.FromFile(@"..\..\Photos\Voitures\" + listOfCad.ElementAt(0).Nom + ".jpg");            
             listOfCad.ElementAt(0).Img = imgCadeau;
 
             // on charge le voyage
-            imgCadeau = Image.FromFile(@"..\..\Photos\Voyages\" + listOfCad.ElementAt(1).Nom + ".jpg");
-            //listOfImg.Add(imgCadeau);
+            imgCadeau = Image.FromFile(@"..\..\Photos\Voyages\" + listOfCad.ElementAt(1).Nom + ".jpg");           
             listOfCad.ElementAt(1).Img = imgCadeau;
 
             // on charge le mobilier
-            imgCadeau = Image.FromFile(@"..\..\Photos\Mobiliers\" + listOfCad.ElementAt(2).Nom + ".jpg");
-            //listOfImg.Add(imgCadeau);
+            imgCadeau = Image.FromFile(@"..\..\Photos\Mobiliers\" + listOfCad.ElementAt(2).Nom + ".jpg");            
             listOfCad.ElementAt(2).Img = imgCadeau;
 
             NetworkStream ms = client.GetStream();
-            BinaryFormatter formatter = new BinaryFormatter();            
-            //formatter.Serialize(ms, listOfImg); //Serialise l'objet dans le Client NetworkStream            
+            BinaryFormatter formatter = new BinaryFormatter();                        
             formatter.Serialize(ms, listOfCad);
             
             ms.Flush(); // on s'assure que tout soit écrit dans le flux 
@@ -212,9 +205,10 @@ namespace JustePrix
                      * Affichage du prix total des cadeaux chez le serveur
                      */
                     String prixTot = Convert.ToString(prixTotal);
+                    String affPrix = "Montant total des cadeaux : " + prixTot;
                     try
                     {
-                        Invoke(new Action<String>(addMessage), prixTot);    // ajouter à l'historique                
+                        Invoke(new Action<String>(addMessage), affPrix);    // ajouter à l'historique                
                     }
                     catch (InvalidOperationException ex) { MessageBox.Show(ex.Message); }
                 }
@@ -265,13 +259,11 @@ namespace JustePrix
 
                     for (int i = 0; i < k; i++)
                     {
-                        String str = Convert.ToChar(b[i]).ToString();
-                        // try ... pour les invoke ?
+                        String str = Convert.ToChar(b[i]).ToString();                        
                         try
                         {
                             Invoke(new Action<String>(addMessage), str);
-                        }
-                        catch (InvalidOperationException ex) { MessageBox.Show(ex.Message); }
+                        }catch (InvalidOperationException ex) { MessageBox.Show(ex.Message); }
                         chaineRecue += str;
                     }
 
@@ -302,13 +294,18 @@ namespace JustePrix
                     }
                 }
                 catch (Exception e)
-                {
-                    //MessageBox.Show("Erreur serveur - communcication client : " + e.Message);
+                {                    
                     player.leClient.Close();
                     int indiceClient = listOfPlayers.IndexOf(player);
                     player.ClientTourne = false;    // pour arreter le thread du client
                     listOfThClients.RemoveAt(indiceClient);   // supprime le thread qui s'occupe du client
                     listOfPlayers.Remove(player);
+
+                    try
+                    {
+                        Invoke(new Action<String>(addMessage), "\r\n Un client s'est déconnecté !\r\n");
+                    }
+                    catch (InvalidOperationException ex) { MessageBox.Show(ex.Message); }
                 }
             }
         }        
@@ -330,7 +327,16 @@ namespace JustePrix
         }
 
         private void FermetureServeur_Event(object sender, FormClosingEventArgs e)
-        {   // evenement qui se passe juste avant qu'on quitte le serveur (croix rouge)                                        
+        {   // evenement qui se passe juste avant qu'on quitte le serveur (croix rouge)  
+
+            // envoi du caractère "f" --> "fermer" à tous les joueurs
+            byte[] charSent;
+            ASCIIEncoding encoder = new ASCIIEncoding();
+            charSent = encoder.GetBytes("f");
+            foreach(Joueur.Joueur j in listOfPlayers) {                                
+                j.leClient.Client.Send(charSent);
+            }
+              
             for (int i = 0; i < listOfPlayers.Count; i++)
             {
                 // Fermer le flux proprement pour chaque client  

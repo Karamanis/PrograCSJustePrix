@@ -31,29 +31,32 @@ namespace JustePrixClient
 
         private Object thisLock = new Object();
         
-        Boolean stopCompteur = false;
+        bool stopCompteur = false;
+        bool connexionEtablie = false;
 
         Joueur.Joueur player;
 
         public InterfaceJoueur()
         {
-            InitializeComponent();
-            tbRecvMesg.Enabled = false;
+            InitializeComponent();            
 
             serveurAddress = IPAddress.Parse("127.0.0.1");
             TcpClient client = new TcpClient();
 
-            try
-            {
-                client.Connect(serveurAddress, numPort);                
-                player = new Joueur.Joueur(client, 0, true);    // création du joueur
-                stream = player.leClient.GetStream(); 
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("Erreur socket client : " + e.Message);
-                return;
-            }
+            do{
+                try
+                {
+                    client.Connect(serveurAddress, numPort);                
+                    player = new Joueur.Joueur(client, 0, true);    // création du joueur
+                    stream = player.leClient.GetStream();
+                    connexionEtablie = true;
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Erreur socket client : " + e.Message +'\n' + "Nouvelle tentative de connexion dans 5 secondes.");
+                    Thread.Sleep(5000); // on attend 5 seconde
+                }
+            }while(!connexionEtablie);
 
             thEcoute = new Thread(Ecoute); 
             thEcoute.Start();
@@ -144,7 +147,7 @@ namespace JustePrixClient
                         }
                     }
                     else { 
-                        // ... on attend la réponse du serveur ( plus - moins - gagner )                        
+                        // on attend la réponse du serveur ( plus - moins - gagner )                        
                         // chaine recue : +, - ou =
                         byte[] b = new byte[100];
                         try
@@ -165,29 +168,38 @@ namespace JustePrixClient
 
                             switch (resultat)
                             {
-                                case "-":
-                                    // c'est moins ! colorier en rouge le bouton moins
+                                case "-":                                    
                                     MessageBox.Show("C'est MOINS !");
                                     tbEnvoiMsg.Focus();
                                     break;
-                                case "+":
-                                    // c'est plis ! colorier en vert le bouton plus
+                                case "+":                                    
                                     MessageBox.Show("C'est PLUS !");
                                     tbEnvoiMsg.Focus();
                                     break;
                                 case "=":
-                                    // c'est gagner ! A voir ... On déconnecte le client ?! 
-                                    MessageBox.Show("C'est Gagné !");
-                                    
+                                    player.Gagne = true;                                           
                                     try { 
                                         Invoke(new Action(DisabledControls)); 
                                     }catch (InvalidOperationException ex) { MessageBox.Show(ex.Message); }
                                     
+                                    MessageBox.Show("C'est Gagné !");
+                                    
                                     try { 
-                                        Invoke(new Action(FermerClient));
+                                        Invoke(new Action(FermerClient));                                        
                                     }catch(InvalidOperationException ex) { MessageBox.Show(ex.Message); }                                                                        
 
-                                    break;                                
+                                    break; 
+                               
+                                case "f":
+                                    // le serveur est coupé
+                                    try { 
+                                        Invoke(new Action(DisabledControls)); 
+                                    }catch (InvalidOperationException ex) { MessageBox.Show(ex.Message); }                                                                        
+                                    
+                                    try { 
+                                        Invoke(new Action(FermerClient));                                        
+                                    }catch(InvalidOperationException ex) { MessageBox.Show(ex.Message); }
+                                    break;
                             }
                         }
                         catch (Exception) { }         // catch toutes les exceptions liées à Client.Receive()
@@ -268,6 +280,7 @@ namespace JustePrixClient
         {
             btEnvoyer.Enabled = false;
             tbEnvoiMsg.Enabled = false;
+            thHorloge.Abort();
         }
 
         private void SetTextTimer(string text)
@@ -296,7 +309,7 @@ namespace JustePrixClient
         }
         
         private void Closing_Event(object sender, FormClosingEventArgs e)
-        {
+        {            
             FermerClient();
         }
 
@@ -305,7 +318,9 @@ namespace JustePrixClient
             player.leClient.Client.Close();
             stream.Close();
             thEcoute.Abort();
-            thHorloge.Abort();
+            if (thHorloge.IsAlive) {
+                thHorloge.Abort();
+            }
         }
 
         private void Enter_Pressed(object sender, KeyEventArgs e)
@@ -315,8 +330,5 @@ namespace JustePrixClient
             }
         }
 
-
     }
 }
-
-// gérer les fermetures quand on quitte une fenetre

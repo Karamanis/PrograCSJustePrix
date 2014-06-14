@@ -23,22 +23,22 @@ namespace Joueur
             set { prixTotal = value; }
         }
 
-        private Boolean gagne;
-        public Boolean Gagne
+        private bool gagne;
+        public bool Gagne
         {
             get { return gagne; }
             set { gagne = value; }
         }
 
-        private Boolean clientTourne;
-        public Boolean ClientTourne
+        private bool clientTourne;
+        public bool ClientTourne
         {
             get { return clientTourne; }
             set { clientTourne = value; }
         }
 
         // CONSTRUCTEUR
-        public Joueur(TcpClient Client, int prix, Boolean clientCommunique) {
+        public Joueur(TcpClient Client, int prix, bool clientCommunique) {
             client = Client;
             prixTotal = prix;
             clientTourne = clientCommunique;

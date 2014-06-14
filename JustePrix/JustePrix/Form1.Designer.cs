@@ -48,6 +48,8 @@
             this.tbHistorique.Location = new System.Drawing.Point(12, 66);
             this.tbHistorique.Multiline = true;
             this.tbHistorique.Name = "tbHistorique";
+            this.tbHistorique.ReadOnly = true;
+            this.tbHistorique.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tbHistorique.Size = new System.Drawing.Size(260, 163);
             this.tbHistorique.TabIndex = 1;
             // 

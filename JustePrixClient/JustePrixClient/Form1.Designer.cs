@@ -108,7 +108,9 @@
             this.tbRecvMesg.Location = new System.Drawing.Point(12, 273);
             this.tbRecvMesg.Multiline = true;
             this.tbRecvMesg.Name = "tbRecvMesg";
-            this.tbRecvMesg.Size = new System.Drawing.Size(377, 141);
+            this.tbRecvMesg.ReadOnly = true;
+            this.tbRecvMesg.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tbRecvMesg.Size = new System.Drawing.Size(324, 141);
             this.tbRecvMesg.TabIndex = 9;
             // 
             // tbEnvoiMsg
@@ -157,6 +159,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.LightSteelBlue;
             this.ClientSize = new System.Drawing.Size(803, 426);
             this.Controls.Add(this.lbVoyage);
             this.Controls.Add(this.lbMobilier);
