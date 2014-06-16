@@ -222,12 +222,13 @@ namespace JustePrixClient
         }
 
         private void setIntervallePrix(int prix) 
-        {                                    
-            int borneInf = new Random().Next(1000, 35000);
-            int borneSup = new Random().Next(1000, 35000);
+        {
+            Random rnd = new Random();        
+            int borneInf = rnd.Next(1000, 35000);
+            int borneSup = rnd.Next(1000, 35000);
 
-            int prixInf = prix - borneInf; 
-            int prixSup = prix + borneSup;
+            int prixInf = prix - borneInf + (borneInf % 10); // pour avoir des multiples de 10
+            int prixSup = prix + borneSup - (borneSup % 10);
 
             String prixInfStr = Convert.ToString(prixInf);
             String prixSupStr = Convert.ToString(prixSup);
