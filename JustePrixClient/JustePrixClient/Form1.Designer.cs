@@ -39,6 +39,10 @@
             this.lbVoiture = new System.Windows.Forms.Label();
             this.lbMobilier = new System.Windows.Forms.Label();
             this.lbVoyage = new System.Windows.Forms.Label();
+            this.lbPrixInf = new System.Windows.Forms.Label();
+            this.lbPrixSup = new System.Windows.Forms.Label();
+            this.lbPrixIntervalle = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbVoyage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMobilier)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbVoiture)).BeginInit();
@@ -56,7 +60,7 @@
             // 
             // pbVoyage
             // 
-            this.pbVoyage.Location = new System.Drawing.Point(522, 103);
+            this.pbVoyage.Location = new System.Drawing.Point(554, 103);
             this.pbVoyage.Name = "pbVoyage";
             this.pbVoyage.Size = new System.Drawing.Size(204, 153);
             this.pbVoyage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -69,7 +73,7 @@
             this.lbHorloge.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.lbHorloge.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbHorloge.ForeColor = System.Drawing.Color.Red;
-            this.lbHorloge.Location = new System.Drawing.Point(556, 273);
+            this.lbHorloge.Location = new System.Drawing.Point(652, 273);
             this.lbHorloge.Name = "lbHorloge";
             this.lbHorloge.Size = new System.Drawing.Size(106, 73);
             this.lbHorloge.TabIndex = 13;
@@ -77,7 +81,7 @@
             // 
             // pbMobilier
             // 
-            this.pbMobilier.Location = new System.Drawing.Point(271, 103);
+            this.pbMobilier.Location = new System.Drawing.Point(283, 103);
             this.pbMobilier.Name = "pbMobilier";
             this.pbMobilier.Size = new System.Drawing.Size(204, 153);
             this.pbMobilier.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -95,7 +99,7 @@
             // 
             // btEnvoyer
             // 
-            this.btEnvoyer.Location = new System.Drawing.Point(716, 391);
+            this.btEnvoyer.Location = new System.Drawing.Point(665, 394);
             this.btEnvoyer.Name = "btEnvoyer";
             this.btEnvoyer.Size = new System.Drawing.Size(75, 23);
             this.btEnvoyer.TabIndex = 10;
@@ -115,7 +119,7 @@
             // 
             // tbEnvoiMsg
             // 
-            this.tbEnvoiMsg.Location = new System.Drawing.Point(416, 394);
+            this.tbEnvoiMsg.Location = new System.Drawing.Point(345, 394);
             this.tbEnvoiMsg.Name = "tbEnvoiMsg";
             this.tbEnvoiMsg.Size = new System.Drawing.Size(284, 20);
             this.tbEnvoiMsg.TabIndex = 8;
@@ -138,7 +142,7 @@
             this.lbMobilier.AutoSize = true;
             this.lbMobilier.Font = new System.Drawing.Font("Monotype Corsiva", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbMobilier.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.lbMobilier.Location = new System.Drawing.Point(271, 83);
+            this.lbMobilier.Location = new System.Drawing.Point(280, 82);
             this.lbMobilier.Name = "lbMobilier";
             this.lbMobilier.Size = new System.Drawing.Size(65, 18);
             this.lbMobilier.TabIndex = 17;
@@ -149,18 +153,62 @@
             this.lbVoyage.AutoSize = true;
             this.lbVoyage.Font = new System.Drawing.Font("Monotype Corsiva", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbVoyage.ForeColor = System.Drawing.Color.ForestGreen;
-            this.lbVoyage.Location = new System.Drawing.Point(522, 82);
+            this.lbVoyage.Location = new System.Drawing.Point(551, 82);
             this.lbVoyage.Name = "lbVoyage";
             this.lbVoyage.Size = new System.Drawing.Size(55, 18);
             this.lbVoyage.TabIndex = 18;
             this.lbVoyage.Text = "Voyage";
+            // 
+            // lbPrixInf
+            // 
+            this.lbPrixInf.AutoSize = true;
+            this.lbPrixInf.Font = new System.Drawing.Font("Monotype Corsiva", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbPrixInf.Location = new System.Drawing.Point(347, 331);
+            this.lbPrixInf.Name = "lbPrixInf";
+            this.lbPrixInf.Size = new System.Drawing.Size(117, 22);
+            this.lbPrixInf.TabIndex = 19;
+            this.lbPrixInf.Text = "Prix inférieur";
+            // 
+            // lbPrixSup
+            // 
+            this.lbPrixSup.AutoSize = true;
+            this.lbPrixSup.Font = new System.Drawing.Font("Monotype Corsiva", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbPrixSup.Location = new System.Drawing.Point(525, 332);
+            this.lbPrixSup.Name = "lbPrixSup";
+            this.lbPrixSup.Size = new System.Drawing.Size(121, 22);
+            this.lbPrixSup.TabIndex = 20;
+            this.lbPrixSup.Text = "Prix supérieur";
+            // 
+            // lbPrixIntervalle
+            // 
+            this.lbPrixIntervalle.AutoSize = true;
+            this.lbPrixIntervalle.Font = new System.Drawing.Font("Monotype Corsiva", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbPrixIntervalle.Location = new System.Drawing.Point(347, 298);
+            this.lbPrixIntervalle.Name = "lbPrixIntervalle";
+            this.lbPrixIntervalle.Size = new System.Drawing.Size(269, 18);
+            this.lbPrixIntervalle.TabIndex = 21;
+            this.lbPrixIntervalle.Text = "Le prix des cadeaux est compris entre :";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Monotype Corsiva", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(464, 332);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(46, 18);
+            this.label2.TabIndex = 22;
+            this.label2.Text = "< X <";
             // 
             // InterfaceJoueur
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightSteelBlue;
-            this.ClientSize = new System.Drawing.Size(803, 426);
+            this.ClientSize = new System.Drawing.Size(814, 426);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.lbPrixIntervalle);
+            this.Controls.Add(this.lbPrixSup);
+            this.Controls.Add(this.lbPrixInf);
             this.Controls.Add(this.lbVoyage);
             this.Controls.Add(this.lbMobilier);
             this.Controls.Add(this.lbVoiture);
@@ -196,6 +244,10 @@
         private System.Windows.Forms.Label lbVoiture;
         private System.Windows.Forms.Label lbMobilier;
         private System.Windows.Forms.Label lbVoyage;
+        private System.Windows.Forms.Label lbPrixInf;
+        private System.Windows.Forms.Label lbPrixSup;
+        private System.Windows.Forms.Label lbPrixIntervalle;
+        private System.Windows.Forms.Label label2;
 
     }
 }

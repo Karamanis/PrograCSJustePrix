@@ -71,23 +71,30 @@ namespace JustePrixClient
 
         private void EnvoyerReponse() 
         {
-            // On lance le timer lorsque le joueur envoie une première réponse
-            if (thHorloge.ThreadState == ThreadState.Unstarted)
-            {
-                thHorloge.Start();
-            }
             String reponse = tbEnvoiMsg.Text;
 
-            ASCIIEncoding asen = new ASCIIEncoding();
-            byte[] ba = asen.GetBytes(reponse);
+            if (reponse.Length != 0)
+            {
+                // On lance le timer lorsque le joueur envoie une première réponse
+                if (thHorloge.ThreadState == ThreadState.Unstarted)
+                {
+                    thHorloge.Start();
+                }
+            
+                ASCIIEncoding asen = new ASCIIEncoding();
+                byte[] ba = asen.GetBytes(reponse);
 
-            tbRecvMesg.Text += "\r\n Transmitting....." + reponse + "\r\n";
+                tbRecvMesg.Text += "\r\n Transmitting....." + reponse + "\r\n";
 
-            stream.Write(ba, 0, ba.Length);
+                stream.Write(ba, 0, ba.Length);
 
-            stream.Flush();
+                stream.Flush();
 
-            tbEnvoiMsg.Text = "";
+                tbEnvoiMsg.Text = "";
+            }
+            else {
+                MessageBox.Show("Vous n'avez pas proposé de prix !");
+            }
         }
 
         private void Ecoute()
@@ -115,25 +122,31 @@ namespace JustePrixClient
                                     try{
                                         Invoke(new Action<String>(setLabelVoit), nomCadeau);
                                     }
-                                    catch (InvalidOperationException) { }
+                                    catch (InvalidOperationException e) { MessageBox.Show("Erreur client : "+e.Message); }
 
                                     nomCadeau = cadReceived.ElementAt(1).Nom.Replace("_", String.Empty + " ");
                                     try{
                                         Invoke(new Action<String>(setLabelVoy), nomCadeau);
                                     }
-                                    catch (InvalidOperationException) { }
+                                    catch (InvalidOperationException e) { MessageBox.Show("Erreur client : " + e.Message); }
 
                                     nomCadeau = cadReceived.ElementAt(2).Nom.Replace("_", String.Empty + " ");
                                     try{
                                         Invoke(new Action<String>(setLabelMob), nomCadeau);
                                     }
-                                    catch (InvalidOperationException) { }                                    
+                                    catch (InvalidOperationException e) { MessageBox.Show("Erreur client : " + e.Message); }                                    
                                     
                                     // ... Recuperer le prix total
                                     foreach (CadeauJP cad in cadReceived) {
                                         player.lePrix += cad.Prix;
                                     }
                                     // le joueur contient le prix total de tous ses cadeaux
+                                    
+                                    try
+                                    {
+                                        Invoke(new Action<int>(setIntervallePrix), player.lePrix);
+                                    }
+                                    catch (InvalidOperationException e) { MessageBox.Show("Erreur client : " + e.Message); } 
 
                                     imagesRecues = true;
 
@@ -148,7 +161,7 @@ namespace JustePrixClient
                     }
                     else { 
                         // on attend la réponse du serveur ( plus - moins - gagner )                        
-                        // chaine recue : +, - ou =
+                        // chaine recue : +, -, =, ou f
                         byte[] b = new byte[100];
                         try
                         {
@@ -206,6 +219,21 @@ namespace JustePrixClient
                     }
                 }       
             }         
+        }
+
+        private void setIntervallePrix(int prix) 
+        {                                    
+            int borneInf = new Random().Next(1000, 35000);
+            int borneSup = new Random().Next(1000, 35000);
+
+            int prixInf = prix - borneInf; 
+            int prixSup = prix + borneSup;
+
+            String prixInfStr = Convert.ToString(prixInf);
+            String prixSupStr = Convert.ToString(prixSup);
+
+            lbPrixInf.Text = prixInfStr;
+            lbPrixSup.Text = prixSupStr;
         }
 
         private void setLabelVoit(String labText) 
